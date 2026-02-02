@@ -256,6 +256,8 @@ h3{
   background: rgba(255,255,255,.04);
   text-align: center;
   transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .certificate-card:hover{
@@ -274,12 +276,14 @@ h3{
   color: var(--text);
   margin-bottom: 10px;
   line-height: 1.4;
+  flex-grow: 1;
 }
 
 .certificate-venue{
   font-size: .85rem;
   color: var(--muted);
   margin-bottom: 8px;
+  min-height: 2.5em;
 }
 
 .certificate-date{
@@ -312,7 +316,8 @@ h3{
   display: flex;
   gap: 10px;
   justify-content: center;
-  margin-top: 14px;
+  margin-top: auto;
+  padding-top: 14px;
   flex-wrap: wrap;
 }
 
