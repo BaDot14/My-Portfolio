@@ -23,7 +23,7 @@
 
         <div class="links">
           <a href="https://github.com/BaDot14" target="_blank" rel="noreferrer">GitHub</a>
-          <a href="Fernandez_Resume.pdf" target="_blank" rel="noreferrer">Resume</a>
+          <a href="#" onclick="openPdfModal('Fernandez_Resume.pdf', 'Resume'); return false;">Resume</a>
         </div>
       </div>
 
@@ -129,40 +129,31 @@
       <p class="muted">Workshops and trainings I've attended.</p>
 
       <div class="certificates-grid">
-        <article class="certificate-card">
+        <article class="certificate-card" onclick="openGallery(['certificates/certificates/OpenxAI.png'], 'OpenxAI Mini App Workshop & Competition')">
           <div class="certificate-img">
             <img src="certificates/certificates/OpenxAI.png" alt="OpenxAI Certificate" />
           </div>
           <h3>OpenxAI Mini App Workshop & Competition</h3>
           <p class="certificate-venue">Cor Jesu College Auditorium,<br> Digos City, Philippines</p>
           <p class="certificate-date">December 1, 2025</p>
-          <div class="certificate-links">
-            <a href="certificates/certificates/OpenxAI.png" target="_blank" class="cert-link">🖼️ View Image</a>
-          </div>
         </article>
 
-        <article class="certificate-card">
+        <article class="certificate-card" onclick="openGallery(['certificates/certificates/Davsur VA Workshop.png'], 'DavSur VA Workshop')">
           <div class="certificate-img">
             <img src="certificates/certificates/Davsur VA Workshop.png" alt="DavSur VA Certificate" />
           </div>
           <h3>DavSur VA Workshop</h3>
           <p class="certificate-venue">Viewpoint Hotel, Lim Street,<br> Digos City, Philippines</p>
           <p class="certificate-date">September 27, 2025</p>
-          <div class="certificate-links">
-            <a href="certificates/certificates/Davsur VA Workshop.png" target="_blank" class="cert-link">🖼️ View Image</a>
-          </div>
         </article>
 
-        <article class="certificate-card">
+        <article class="certificate-card" onclick="openGallery(['certificates/certificates/DICT.png'], 'Software Development and Design Thinking')">
           <div class="certificate-img">
             <img src="certificates/certificates/DICT.png" alt="Software Development Certificate" />
           </div>
           <h3>Software Development and Design Thinking</h3>
           <p class="certificate-venue">Zoom Platform <br> (Online)</p>
           <p class="certificate-date">July 11, 2025</p>
-          <div class="certificate-links">
-            <a href="certificates/certificates/DICT.png" target="_blank" class="cert-link">🖼️ View Image</a>
-          </div>
         </article>
       </div>
     </section>
@@ -338,6 +329,15 @@
     <button class="lightbox-nav lightbox-next" onclick="nextImage(event)">&#10095;</button>
   </div>
 
+  <!-- PDF MODAL -->
+  <div id="pdf-modal" class="lightbox" onclick="handlePdfModalClick(event)">
+    <span class="lightbox-close" onclick="closePdfModal()">&times;</span>
+    <div class="pdf-modal-main">
+      <iframe id="pdf-iframe" class="pdf-content"></iframe>
+      <p id="pdf-caption" class="lightbox-caption"></p>
+    </div>
+  </div>
+
   <script>
     let currentImages = [];
     let currentIndex = 0;
@@ -406,12 +406,44 @@
     // Keyboard navigation
     document.addEventListener('keydown', function(e) {
       const lightbox = document.getElementById('lightbox');
-      if (!lightbox.classList.contains('active')) return;
+      const pdfModal = document.getElementById('pdf-modal');
       
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowRight') nextImage(e);
-      if (e.key === 'ArrowLeft') prevImage(e);
+      if (lightbox.classList.contains('active')) {
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight') nextImage(e);
+        if (e.key === 'ArrowLeft') prevImage(e);
+      }
+      
+      if (pdfModal.classList.contains('active')) {
+        if (e.key === 'Escape') closePdfModal();
+      }
     });
+
+    // PDF Modal functions
+    function openPdfModal(pdfUrl, caption) {
+      const modal = document.getElementById('pdf-modal');
+      const iframe = document.getElementById('pdf-iframe');
+      const captionEl = document.getElementById('pdf-caption');
+      
+      iframe.src = pdfUrl;
+      captionEl.textContent = caption;
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePdfModal() {
+      const modal = document.getElementById('pdf-modal');
+      const iframe = document.getElementById('pdf-iframe');
+      modal.classList.remove('active');
+      iframe.src = '';
+      document.body.style.overflow = '';
+    }
+
+    function handlePdfModalClick(e) {
+      if (e.target.classList.contains('lightbox')) {
+        closePdfModal();
+      }
+    }
   </script>
 </body>
 </html>
